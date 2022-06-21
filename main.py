@@ -71,20 +71,22 @@ def main():
                              'getgems': [10**20, '']}
                     try:
                         getgems_floor = json.loads(requests.post('https://api.getgems.io/graphql', json=getgems_data).text)['data']['alphaNftItemSearch']['edges'][0]['node']
-                        floor['getgems'] = [round(float(getgems_floor['sale']['fullPrice']) / (10 ** 9), 3), getgems_floor['address']]
+                        floor['getgems'] = [round(float(getgems_floor['sale']['fullPrice']) / (10 ** 9), 3),
+                                            f"https://getgems.io/collection/{detect_address(COLLECTION_ADDRESS)['bounceable']['b64url']}/{getgems_floor['address']}"]
                     except:
                         print('Get GetGems Floor Failed')
                     try:
                         disintar_floor = json.loads(requests.post('https://beta.disintar.io/api/get_entities/',
                                                                   headers=disintar['headers'],
                                                                   data=disintar['get_floor']).text)['data'][0]
-                        floor['disintar'] = [round(float(disintar_floor['price']), 3), disintar_floor['address']]
+                        floor['disintar'] = [round(float(disintar_floor['price']), 3),
+                                             f"https://beta.disintar.io/object/{disintar_floor['address']}"]
                     except:
                         print('Get Disintar Floor Failed')
                     try:
                         floor_market = 'disintar' if floor['disintar'][0] < floor['getgems'][0] else 'getgems'
-                        floor_price, floor_nft = floor[floor_market]
-                        floor_text = f'🔽 <b>Current <a href="https://beta.disintar.io/object/{floor_nft}">floor</a>:</b> {floor_price} TON'
+                        floor_price, floor_link = floor[floor_market]
+                        floor_text = f'🔽 <b>Current <a href="{floor_link}">floor</a>:</b> {floor_price} TON'
                         if price <= floor_price * 1.1:
                             emoji = '🍣'
                     except:

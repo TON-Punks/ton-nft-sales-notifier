@@ -26,7 +26,7 @@ disintar = {
     'get_floor': {'entity_name': 'Collection',
                   'order_by': '["creation_date"]',
                   'filter_by': '[{"name":"address","value":' +
-                               detect_address(COLLECTION_ADDRESS)['non_bounceable']['b64url'] + '}]',
+                               detect_address(COLLECTION_ADDRESS)['bounceable']['b64url'] + '}]',
                   'limit': 'null',
                   'group_by': 'null',
                   'page': '0', 'request_time': 'undefined'}
