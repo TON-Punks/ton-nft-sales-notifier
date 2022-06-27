@@ -116,7 +116,6 @@ def main():
                             except Exception as e:
                                 print(f'Message Send ({chat}) Failed: {e}')
     except Exception as e:
-        open(f'{current_path}/LastSaleDatetime', 'w').write(old_utime)
         print(e)
 
 
