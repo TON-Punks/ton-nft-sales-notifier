@@ -70,9 +70,18 @@ def main():
                     floor = {'disintar': [10**20, ''],
                              'getgems': [10**20, '']}
                     try:
-                        getgems_floor = json.loads(requests.post('https://api.getgems.io/graphql', json=getgems_data).text)['data']['alphaNftItemSearch']['edges'][0]['node']
-                        floor['getgems'] = [round(float(getgems_floor['sale']['fullPrice']) / (10 ** 9), 3),
-                                            f"https://getgems.io/collection/{detect_address(COLLECTION_ADDRESS)['bounceable']['b64url']}/{getgems_floor['address']}"]
+                        getgems_floor = json.loads(requests.post('https://api.getgems.io/graphql', json=getgems_data).text)['data']['alphaNftItemSearch']['edges']
+                        number = 0
+                        error = True
+                        while error:
+                            try:
+                                gg_floor_num = getgems_floor[number]['node']
+                                floor['getgems'] = [round(float(gg_floor_num['sale']['fullPrice']) / (10 ** 9), 3),
+                                                    f"https://getgems.io/collection/{detect_address(COLLECTION_ADDRESS)['bounceable']['b64url']}/{gg_floor_num['address']}"]
+                                error = False
+                            except:
+                                pass
+                            number += 1
                     except:
                         print('Get GetGems Floor Failed')
                     try:

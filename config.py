@@ -37,12 +37,12 @@ getgems_query = "query nftSearch($count: Int!, $cursor: String, $query: String, 
 getgems_data = {'operationName': 'nftSearch',
                 'query': getgems_query,
                 'variables': {
-                    'count': 1,
+                    'count': 30,
                     'query': '{"$and":[{"collectionAddress":"' + detect_address(COLLECTION_ADDRESS)['bounceable']['b64url'] + '"}]}',
                     'sort': '[{"isOnSale":{"order":"desc"}},{"price":{"order":"asc"}},{"index":{"order":"asc"}}]'
                 }}
 
-main_params = {'address': ROYALTY_ADDRESS, 'limit': '500', 'to_lt': '0',
+main_params = {'address': ROYALTY_ADDRESS, 'limit': '100', 'to_lt': '0',
                'archival': 'false', 'api_key': TONCENTER_API}
 
 second_params = {'limit': '15', 'to_lt': '0', 'archival': 'false',
